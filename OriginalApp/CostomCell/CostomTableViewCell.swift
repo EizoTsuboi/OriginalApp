@@ -17,7 +17,7 @@ class CostomTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var captionLabel: UILabel!
-    @IBOutlet weak var underMapView: UIView!
+    @IBOutlet weak var cellImageView: UIImageView!
     
 
     override func awakeFromNib() {
@@ -42,18 +42,10 @@ class CostomTableViewCell: UITableViewCell {
             let dateString = formatter.string(from: date)
             dateLabel.text = dateString
         }
+        //imageView
+        if postData.image != []{
+            cellImageView.image = postData.image[0]
+        }
         
-//        //Mapの表示
-//        if let point = postData.point{
-//            let camera = GMSCameraPosition.camera(withLatitude: point.latitude, longitude: point.longitude, zoom: 17.0)
-//            mapView = GMSMapView.map(withFrame: self.underMapView.frame, camera: camera)
-//            self.underMapView.addSubview(mapView!)
-//        }else{
-//            let camera = GMSCameraPosition.camera(withLatitude: 34.806651, longitude: 135.493011, zoom: 15.0)
-//            mapView = GMSMapView.map(withFrame: self.underMapView.frame, camera: camera)
-//            self.underMapView.addSubview(mapView!)
-//        }
-        
-       
     }
 }

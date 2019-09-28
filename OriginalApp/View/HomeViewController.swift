@@ -12,6 +12,7 @@ import Firebase
 class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
     var postArray:[PostData] = []
+    var postData:PostData?
     let dataService = DataService()
     let db = Firestore.firestore()
 
@@ -62,9 +63,28 @@ class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CostomTableViewCell
         
-        let postData = postArray[indexPath.row]
-        cell.setPostDate(postData)
+        postData = postArray[indexPath.row]
+        cell.setPostDate(postData!)
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        postData = self.postArray[indexPath.row]
+        performSegue(withIdentifier: "cellSegue", sender: self.tableView)
+        print("確認5: didSelectRow")
+    }
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "cellSegue") {
+            let checkViewController: CheckViewController = segue.destination as! CheckViewController
+            
+            checkViewController.post = self.postData
+
+        }
+    }
+    
+    
 }

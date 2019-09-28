@@ -17,7 +17,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     let dataService = DataService()
     let db = Firestore.firestore()
     var mapView:GMSMapView?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,13 +26,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
        
         self.view = mapView
         mapView?.delegate = self
-        
-//        //データベースから受け取った位置情報をマップに表示
-//        let marker = GMSMarker()
-//        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-//        marker.title = "Sydney"
-//        marker.snippet = "Australia"
-//        marker.map = mapView
     }
     
     
@@ -80,4 +73,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         }
         
     }
+    
+    
 }

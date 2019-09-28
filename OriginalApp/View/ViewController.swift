@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     }
     func setupTab(){
         //画像のファイル名を指定してESTabBarControllerを作成する
-        let tabBarController: ESTabBarController! = ESTabBarController(tabIconNames: ["home", "search", "map", "setting"])
+        let tabBarController: ESTabBarController! = ESTabBarController(tabIconNames: ["home", "button", "map", ])
         //背景色、選択時の色を設定する
         tabBarController.selectedColor = UIColor.hex(string: "5C821A", alpha: 1.0)
         tabBarController.buttonsBackgroundColor = UIColor.hex(string: "C6D166", alpha: 1.0)
@@ -42,14 +42,17 @@ class ViewController: UIViewController {
         
         //タブをタップしたときに表示するViewControllerを設定
         let homeViewController = storyboard?.instantiateViewController(withIdentifier: "Home")
-        let searchViewController = storyboard?.instantiateViewController(withIdentifier: "Search")
         let mapViewController = storyboard?.instantiateViewController(withIdentifier: "Map")
-        let settingViewController = storyboard?.instantiateViewController(withIdentifier: "Setting")
         
         tabBarController.setView(homeViewController, at: 0)
-        tabBarController.setView(searchViewController, at: 1)
         tabBarController.setView(mapViewController, at: 2)
-        tabBarController.setView(settingViewController, at: 3)
+        
+        //真ん中のタブはボタンとして扱う
+        tabBarController.highlightButton(at: 1)
+        tabBarController.setAction({
+            let inputViewController = self.storyboard?.instantiateViewController(withIdentifier: "Input")
+            self.present(inputViewController!,animated: true, completion: nil)
+        }, at: 1)
         
     }
 

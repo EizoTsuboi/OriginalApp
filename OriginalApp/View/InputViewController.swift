@@ -122,7 +122,6 @@ class InputViewController: UIViewController, GMSMapViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         if let image = cell.contentView.viewWithTag(1) as? UIImageView {
-                   // CollectionViewCellのUILabelを取得し、絵文字をに代入する
             image.image = inputImage[indexPath.row]
         }
         print("確認3:\(inputImage[indexPath.row])")
@@ -132,15 +131,23 @@ class InputViewController: UIViewController, GMSMapViewDelegate, UICollectionVie
     //ボタンを押した時の処理
     //入力ボタン
     @IBAction func tupButton(_ sender: Any) {
+        
+        if titleTextField.text == "" || captionTextView.text == "" || inputCoordinate == nil{
+            SVProgressHUD.showError(withStatus: "必要項目を入力してください")
+            return
+        }
+        
         //imageViewから画像を取得
         var imageString:[String] = []
-        if inputImage == []{
+        if inputImage != []{
             
             for imageData in inputImage{
                 let data = imageData.jpegData(compressionQuality: 0.5)
                 imageString.insert(data!.base64EncodedString(options: .lineLength64Characters), at: 0)
             }
         }
+        
+        
         //postDataに必要な情報を取得しておく
         let time = Date.timeIntervalSinceReferenceDate
         let inputGeoPoint = GeoPoint(latitude: inputCoordinate!.latitude, longitude: inputCoordinate!.longitude)

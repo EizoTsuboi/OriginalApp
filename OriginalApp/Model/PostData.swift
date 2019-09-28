@@ -26,19 +26,20 @@ class PostData: NSObject {
     init(snapshot: QueryDocumentSnapshot) {
         
         let valueDictionary = snapshot.data()
-        
-        //以下keyに対応させて引っ張ってきている
-        if valueDictionary["imageString"] != nil{
-            self.imageString = valueDictionary["imageString"] as! [String]
-       
-        }
-        
         self.image = []
-        if imageString != nil{
-            for inputImage in imageString{
-                image.insert(UIImage(data: Data(base64Encoded: inputImage, options: .ignoreUnknownCharacters)!)!, at: 0)
+        
+        
+        if let imageArray = valueDictionary["image"]{
+            let iA = imageArray as! [String]
+        
+            for iStr  in iA{
+                self.imageString.insert(iStr, at: 0)
+                self.image.insert(UIImage(data: Data(base64Encoded: iStr, options: .ignoreUnknownCharacters)!)!, at: 0)
             }
+       
+        
         }
+        
         
         if let time = valueDictionary["time"] as? String{
             self.date = Date(timeIntervalSinceReferenceDate: TimeInterval(time)!)
